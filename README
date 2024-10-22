@@ -1,0 +1,24 @@
+This repository contains some toys related to locks.
+
+## macs_differs.py
+
+### count_keys
+Computes the number of valid keys of a given length and bitting possibilities, that are MACS-valid. This scales extremely well, since it's pure combinatorics. To use, in the last few lines of the file, change the `bitting_positions`, `bitting_depths`, and `macs` parameters in the call to `count_keys`.
+
+### count_keys_macs_and_en1303
+The same as count_keys, but also adds the requirement that the keys be valid according to the EN-1303 standard. This uses a slower, graph based algorithm. It scales much worse than `count_keys`, but should still be fast enough for reasonable parameters (say, n <= 20, k <= 10). 
+
+
+## en1303_macs_differs
+
+Computes the number of valid keys of a given length and bitting possibilities, that are both MACS-valid, and legal according to the EN-1303 specification. This performs an exhaustive search of the keyspace, and so can return samples very easily.
+
+To use, set `n` (number of bitting positions), and `k` (number of depths per bitting position), and `macs` (maximum adjacent cut difference) in `en1303_macs_differs.cpp`, inside `main`. Then compile and run with:
+
+  make && ./en1303_macs_differs
+
+If you'd like to sample some number of keys, you can use:
+
+  make && ./en1303_macs_differs -s 10
+
+That will sample 10 uniformly random keys from the keyspace.
